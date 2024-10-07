@@ -1,6 +1,6 @@
 import './RaitingDinamics.scss'
 import DownloadDashbord from '../../DownloadDashbord/DownloadDashbord.tsx'
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
 import { data } from '../Compitents/Compitents.tsx'
 
 function RaitingDinamics() {
@@ -33,7 +33,6 @@ function RaitingDinamics() {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
-                    <Tooltip />
                     <Area type="monotone" dataKey="uv" stroke="#002D97" fill="url(#colorUv)" />
                 </AreaChart>
             </ResponsiveContainer>

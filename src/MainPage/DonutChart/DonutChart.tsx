@@ -31,7 +31,7 @@ function DonutChart({ data, title, colors }: IProps) {
                         dataKey="value"
                         cornerRadius={10}
                     >
-                        {data.map((index:any) => (
+                        {data.map((item, index:any) => (
                             <>
                                 <Cell style={{ outline: 'none' }} key={`cell-${index}`} fill={colors[index % colors.length]}
                                     strokeWidth={0} />

@@ -10,11 +10,12 @@
 
     &__header {
         display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 20px;
         padding: 0 0 0 30px;
-        width: 85%;
+        width: 100%;
+        align-items: bottom;
+        margin-bottom: 5px;
+        align-items: center;
+        margin-top: 30px;
     }
 
     &__title {
@@ -24,10 +25,13 @@
         line-height: 24px;
         color: #42434B;
         margin: 0;
-        text-align: center;
+        text-align: top;
+        padding-left: 20px;
+        padding-bottom: 10px;
     }
 
     &__download {
-        padding-top: 27px;
+        box-sizing: border-box;
+        margin-bottom: -20px;
     }
 }
