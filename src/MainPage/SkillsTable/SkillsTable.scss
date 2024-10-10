@@ -69,18 +69,10 @@
     display: flex;
     padding-left: 10px;
     gap: 30px;
-    position: relative;
-    max-width: 500px;
-    overflow: scroll;
-    padding-left: 400px;
-
   }
 
   &__team {
     width: 68px;
-    position: fixed;
-    bottom: 500px;
-    left: 70px;
 
     &-name {
       font-size: 12px;
@@ -109,7 +101,6 @@
     color: #42434B;
     text-align: left;
     min-width: 200px;
-    position: fixed;
   }
 
   &__raiting {
@@ -145,13 +136,6 @@
       white-space: nowrap;
       margin: 0;
     }
-
-  }
-
-  &__main {
-    position: relative;
-    max-width: 500px;
-    overflow: scroll;
   }
 
   &__row {
@@ -172,7 +156,6 @@
   color: #42434B;
   gap: 5px;
   padding-left: 5px;
-  position: fixed;
 
   &__image {
     box-sizing: border-box;
@@ -226,8 +209,7 @@
     justify-content: center;
     border-radius: 8px;
     border-bottom: 1px solid #E10D34;
-
-    &-true {
+    &-true{
       border-bottom: 1px solid #009E39
     }
 

@@ -101,10 +101,13 @@ const SkillsTable = () => {
     const [sortedData, setSortedData] = useState<IEmployer[]>([])
   
   
+   
+      
+  
   */
 
   return (
-    <div>
+    <>
       <div className='skills__header'>
         <div className='skills__download'>
           <DownloadDashbord minimalism={true} />
@@ -126,9 +129,6 @@ const SkillsTable = () => {
           <h4 className='table__header'>Команда</h4>
           <p className='table__team-name'>{currentTeam}</p>
         </div>
-        
-
-
 
         <table>
           <thead>
@@ -233,7 +233,7 @@ const SkillsTable = () => {
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 };
 
