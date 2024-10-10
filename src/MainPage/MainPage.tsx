@@ -3,6 +3,7 @@ import './MainPage.scss'
 import StaticCards from './StaticCards/StaticCards';
 import Compitents from './Compitents/Compitents'
 import RaitingDinamics from './RaitingDinamics/RaitingDinamics.tsx'
+import SkillsTable from './SkillsTable/SkillsTable.tsx';
 
 function MainPage() {
 
@@ -38,7 +39,7 @@ function MainPage() {
         <RaitingDinamics />
       </section>
       <section className='table'>
-
+        <SkillsTable />
       </section>
     </main>
   );

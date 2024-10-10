@@ -2,9 +2,10 @@ import './MyTooltip.scss'
 
 interface IProps {
     showTooltip: boolean;
+    text: string;
 }
 
-function MyTooltip({showTooltip} : IProps) {
+function MyTooltip({showTooltip, text } : IProps) {
 
     return (
         <div
@@ -13,7 +14,7 @@ function MyTooltip({showTooltip} : IProps) {
             {showTooltip && (
                 <div className="tooltip">
                     <div className="tooltip-arrow" />
-                    <div className="tooltip-text">График можно детализировать по любой из компетенций при клике на соответствующую линию компетенции или её название в легенде</div>
+                    <div className="tooltip-text">{text}</div>
                 </div>
             )}
         </div>

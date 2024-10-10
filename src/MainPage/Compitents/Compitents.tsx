@@ -27,7 +27,7 @@ export const data = [
     "name": "Page D",
     "uv": 2,
     "pv": 3,
-    "amt": 2
+    "amt": 4
   },
   {
     "name": "Page E",
@@ -85,7 +85,7 @@ function Compitents() {
           <button className={`compitents__skills-button  ${!hardSkills ? 'compitents__skills-button_active' : ''}`} onClick={handleSoftSkills}>Soft skills</button>
           <button data-tooltip-id='compitents-tooltip' className='compitents__question-button' onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}></button>
-          <MyTooltip showTooltip={showTooltip} />
+          <MyTooltip showTooltip={showTooltip} text='График можно детализировать по любой из компетенций при клике на соответствующую линию компетенции или её название в легенде'/>
         </div>
       </div>
       <div className='compitents__caption'>Средняя оценка</div>
