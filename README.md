@@ -1,50 +1,40 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# SuperStars дашборд
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Стек Технологий
 
-## Expanding the ESLint configuration
+**React:** Основной фреймворк для создания интерфейса. React обеспечивает высокую производительность и модульность, что делает его идеальным выбором для ваших творческих проектов. 
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+**React Router:** Маршрутизация на основе компонентов для удобной навигации в приложении и поддержки множества страниц. 🛤️
 
-- Configure the top-level `parserOptions` property like this:
+**TypeScript:** Статически типизированный язык программирования, который обеспечивает надежность и удобство разработки, предотвращая ошибки на этапе компиляции. ✨
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+**Vite:** Современный инструмент разработки для быстрой сборки проекта 🛠️
+
+**SASS (SCSS):** Препроцессор CSS для создания модульных, многоразовых стилей, облегчая поддержку и структурирование стилей приложения. 🎨
+
+**EsLint** и **Pritter**   обеспечивают высокое качество кода и его структурированность. 
+
+### Использование дополнительных библиотек:
+
+ - Recharts: для создания графиков (https://recharts.org/en-US/)
+ - uuid: для формирования уникальных ключей (https://www.npmjs.com/package/uuid)
+
+## Как клонировать и запустить проект
+
+```bash
+# Клонировать репозиторий
+git clone https://github.com/AnnaKharatova/SuperStars.git
+
+# Установить зависимости
+npm install
+
+# Запустить проект в режиме разработки
+npm run dev
+
+# Запустить сборку проекта
+npm run build
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Откройте браузер и перейдите по адресу (по умолчанию: `http://localhost:5173`), чтобы начать работу с платформой. 🚀

@@ -1,15 +1,17 @@
-import './LineToolTip.scss'
-  
-  const LineTooltip = ({ active, payload, name }: any) => {
-    if (active && payload && payload.length) {
-        return (
-          <div className="line-tooltip">
-            <p>{name}: {payload[0].value}</p>
-          </div>
-        );
-      }
-  
-    return null;
-  };
+import "./LineToolTip.scss";
 
-  export default LineTooltip
+const LineTooltip = ({ active, payload, name }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="line-tooltip">
+        <p>
+          {name}: {payload[0].value}
+        </p>
+      </div>
+    );
+  }
+
+  return null;
+};
+
+export default LineTooltip;

@@ -1,9 +1,7 @@
-import './DevelopmentPage.scss'
+import "./DevelopmentPage.scss";
 
-function DevelopmentPage(){
-    return(
-        <div>DevelopmentPage</div>
-    )
+function DevelopmentPage() {
+  return <div>DevelopmentPage</div>;
 }
 
-export default DevelopmentPage
+export default DevelopmentPage;
