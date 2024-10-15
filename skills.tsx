@@ -7,22 +7,21 @@ import errowDown from "../../assets/icons/sort-arrow.svg";
 import MyTooltip from "../../MyTooltip/MyTooltip";
 import progressUp from "../../assets/icons/progress-arrow-up.svg";
 
-import { IEmployees, ITeam } from '../../utils/types.ts'
+import {  IEmployees } from '../../utils/types.ts'
+
+const teams = ["Core", "Mode"];
 
 interface IProps {
-  employees: IEmployees[],
-  teams: ITeam[],
+  employees: IEmployees[]
 }
 
-const SkillsTable = ({ employees, teams }: IProps) => {
+const SkillsTable = ({employees} : IProps) => {
   const [hardSkills, setHardSkills] = useState<boolean>(true);
-  const [currentTeam, setCurrentTeam] = useState<ITeam>({
-    id: 1,
-    name: "Core"
-});
+  const [currentTeam, setCurrentTeam] = useState<string>('Core');
+  const [softSkillsList, setSoftSkillsList] = useState<string[]>([]);
+  const [hardSkillsList, setHardSkillsList] = useState<string[]>([]);
   const [showTooltip, setShowTooltip] = useState<string | null>(null);
 
-  if (!employees) return <div>Загрузка данных...</div>
 
   const softList = Array.from(
     new Set(
@@ -31,6 +30,7 @@ const SkillsTable = ({ employees, teams }: IProps) => {
       ),
     ),
   );
+  setSoftSkillsList(softList);
 
   const hardList = Array.from(
     new Set(
@@ -38,7 +38,8 @@ const SkillsTable = ({ employees, teams }: IProps) => {
         item.skills?.hard_skills?.map((item) => item.name),
       ),
     ),
-  )
+  );
+  setHardSkillsList(hardList);
 
   function handleSoftSkills() {
     setHardSkills(false);
@@ -48,7 +49,7 @@ const SkillsTable = ({ employees, teams }: IProps) => {
     setHardSkills(true);
   }
 
-  function handleTeam(team: ITeam) {
+  function handleTeam(team: string) {
     setCurrentTeam(team);
   }
 
@@ -90,12 +91,12 @@ const SkillsTable = ({ employees, teams }: IProps) => {
           {teams.map((team) => (
             <button
               key={uuidv4()}
-              className={`skills__skills-button ${currentTeam.name == team.name ? "skills__skills-button_active" : ""}`}
+              className={`skills__skills-button ${currentTeam == team ? "skills__skills-button_active" : ""}`}
               onClick={() => {
                 handleTeam(team);
               }}
             >
-              {team.name}
+              {team}
             </button>
           ))}
         </div>
@@ -104,7 +105,7 @@ const SkillsTable = ({ employees, teams }: IProps) => {
       <div className="table__container">
         <div className="table__team">
           <h4 className="table__header">Команда</h4>
-          <p className="table__team-name">{currentTeam?.name}</p>
+          <p className="table__team-name">{currentTeam}</p>
         </div>
         <div className="table__main">
           <table>
@@ -137,7 +138,7 @@ const SkillsTable = ({ employees, teams }: IProps) => {
                   />
                 </th>
                 {hardSkills &&
-                  hardList.map((skillName, index) => (
+                  hardSkillsList.map((skillName, index) => (
                     <th key={uuidv4()} className="table__skill">
                       <div className="table__skill-container">
                         <p className="table__skill-text">{skillName}</p>
@@ -155,21 +156,21 @@ const SkillsTable = ({ employees, teams }: IProps) => {
                     </th>
                   ))}
                 {!hardSkills &&
-                  softList.map((skillName, index) => (
+                  softSkillsList.map((skillName, index) => (
                     <th key={uuidv4()} className="table__skill">
-                      <div className="table__skill-container">
-                        <p className="table__skill-text">{skillName}</p>
-                        <button
-                          className="table__sort-button"
-                          onMouseOver={() => handleMouseOver(String(index))}
-                          onMouseOut={handleMouseOut}
-                          onClick={() => handleSort(skillName)}
-                        ></button>
-                        <MyTooltip
-                          showTooltip={showTooltip === String(index)}
-                          text="Сортировка"
-                        />
-                      </div>
+                      <p>{skillName}</p>
+                      <button
+                        className="table__sort-button"
+                        onMouseOver={() => handleMouseOver(String(index))}
+                        onMouseOut={handleMouseOut}
+                        onClick={() => handleSort(skillName)}
+                      >
+                        <img src={errowDown} alt="sort Icon" />
+                      </button>
+                      <MyTooltip
+                        showTooltip={showTooltip === String(index)}
+                        text="Сортировка"
+                      />
                     </th>
                   ))}
               </tr>
@@ -196,7 +197,7 @@ const SkillsTable = ({ employees, teams }: IProps) => {
                         text={"Bus Factor"}
                       />
                     )}
-                    <div className="employee__about">
+                    <div>
                       <p className="employee__name">{item.name}</p>
                       <p className="employee__position">{`${item.position}, ${item.grade}`}</p>
                     </div>
@@ -219,15 +220,9 @@ const SkillsTable = ({ employees, teams }: IProps) => {
                     ))}
                   {!hardSkills &&
                     item.skills.soft_skills.map((i) => (
-                      <td key={uuidv4()}>
-                        <div className="employee__score">
-                          <img
-                            className="employee__score-progress"
-                            src={progressUp}
-                            alt="прогресс"
-                          />
-                          <p className="employee__score-value">{i.score}</p>
-                        </div>
+                      <td key={uuidv4()} className="employe__score">
+                        <img className="employe__score-progress" />
+                        <p className="employe__score-value">{i.score}</p>
                       </td>
                     ))}
                 </tr>

@@ -122,8 +122,14 @@ function Compitents() {
           margin={{ top: 5, right: 10, left: 5, bottom: 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis type="number" domain={[1, "dataMax"]} interval={0} />
+          <XAxis dataKey="name" tickFormatter={(value: string) => {
+            return value || "N/A";
+          }} />
+
+          <YAxis type="number" domain={[1, "dataMax"]} interval={0}
+            tickFormatter={(value) => {
+              return value.toFixed(2);
+            }} />
           <Tooltip content={<LineTooltip name={"название ветки"} />} />
           <Legend
             onClick={handleLegentClick}

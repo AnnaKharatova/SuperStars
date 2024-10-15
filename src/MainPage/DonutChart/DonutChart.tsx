@@ -1,5 +1,6 @@
 import DownloadDashbord from "../../DownloadDashbord/DownloadDashbord";
 import "./DonutChart.scss";
+
 import { PieChart, Pie, Cell, ResponsiveContainer, LabelList } from "recharts";
 
 interface IProps {
@@ -31,14 +32,12 @@ function DonutChart({ data, title, colors }: IProps) {
             cornerRadius={10}
           >
             {data.map((item, index: any) => (
-              <>
                 <Cell
                   style={{ outline: "none" }}
                   key={`cell-${index}+${item.name}`}
                   fill={colors[index % colors.length]}
                   strokeWidth={0}
                 />
-              </>
             ))}
             <LabelList
               dataKey="name"

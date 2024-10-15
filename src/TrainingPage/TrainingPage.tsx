@@ -1,49 +1,25 @@
 import "./TrainingPage.scss";
 import { useEffect, useState } from "react";
 import defaultPhoto from "../assets/images/photo-default.svg";
+import {BASE_URL} from '../utils/constants.js'
 
 interface ITrainingData {
-  id: number;
-  employee: {
-    name: string;
-    position: string;
-    grade: string;
-    bus_factor: boolean;
-  };
-  skill: {
-    competence: string;
-    name: string;
-    skill_course: string;
-    time_of_training: string;
-  };
-  request_count: number;
-}
-[];
-
-/* interface TrainingData {
-    request_count: number,
-    results: {
-        cours: {
-            name: string
-            skill: {
-                name: string,
-                employees: {
-                    name: string,
-                    position: string,
-                    grade: string,
-                    bus_factor: boolean,
-                    test_data: {
-                        employee: number,
-                        position: number,
-                        grade: number
-                    }
-                }[]
-            }[]
-        }
+  employees: {
+    bus_factor:boolean,
+    grade: string,
+    name: string,
+    position: string
+    test_data: {
+      employee: number, 
+      position: number, 
+      grade: number
     }
-} */
-
+  }
+  name: string
+}
+  
 function TrainingPage() {
+
   const item = {
     bus_factor: true,
     name: "Иванова Екатерина",
@@ -52,18 +28,11 @@ function TrainingPage() {
   };
 
   const [data, setData] = useState<ITrainingData[]>([]);
+
   console.log(data);
 
-  useEffect(() => {
-    fetch(`../../front.json`)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-      })
-      .catch((res) => {
-        console.log("Ошибка при получении данных:", res.message);
-      });
-  }, []);
+
+
 
   return (
     <section className="training">
