@@ -24,19 +24,12 @@
   width: 0;
   height: 0;
   border-right: 6px solid #787983;
-  /* Цвет стрелки */
   border-left: 6px solid transparent;
-  /* Прозрачный */
   border-top: 6px solid transparent;
-  /* Прозрачный */
   border-bottom: 6px solid transparent;
-  /* Прозрачный */
   top: 50%;
-  /* Вертикальное центрирование */
   left: -10px;
-  /* Позиционирование слева */
   transform: translateY(-50%);
-  /* Вертикальное центрирование */
 }
 
 .tooltip-text {

@@ -1,6 +1,5 @@
 import "./Compitents.scss";
 import { useState } from "react";
-import DownloadDashbord from "../../DownloadDashbord/DownloadDashbord";
 import {
   LineChart,
   CartesianGrid,
@@ -11,6 +10,7 @@ import {
   Legend,
   Line,
 } from "recharts";
+import DownloadDashbord from "../../DownloadDashbord/DownloadDashbord";
 import MyTooltip from "../../MyTooltip/MyTooltip";
 import LineTooltip from "../LineTooltip/LineTooltip";
 export const data = [
@@ -54,6 +54,7 @@ export const data = [
 
 function Compitents() {
   const [hardSkills, setHardSkills] = useState(true);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   function handleSoftSkills() {
     setHardSkills(false);
@@ -66,8 +67,6 @@ function Compitents() {
   function handleLineClick() {
     console.log("click");
   }
-
-  const [showTooltip, setShowTooltip] = useState(false);
 
   const handleMouseOver = () => {
     setShowTooltip(true);
@@ -147,7 +146,6 @@ function Compitents() {
               },
               { value: "Базы данных", color: "#82ca9d" },
               { value: "Иностранные языки", color: "#82ca9d" },
-              // добавьте остальные линии
             ]}
           />
           {hardSkills ? (

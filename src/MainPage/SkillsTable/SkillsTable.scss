@@ -132,9 +132,7 @@
       text-align: left;
       width: 44px;
       overflow: hidden;
-      /* Скрываем все, что выходит за пределы */
       text-overflow: ellipsis;
-      /* Добавляем многоточие */
       white-space: nowrap;
       margin: 0;
     }
@@ -244,14 +242,12 @@
   }
 }
 
-/* Зафиксируйте первые два столбца */
 table th:nth-child(-n + 2),
 table td:nth-child(-n + 2) {
   position: sticky;
-  left: 0; /* Установите позицию для фиксации */
+  left: 0;
 }
 
-/* Тень при наведении на строку */
-table tbody tr:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Настраиваемая тень */
+.skills table tbody tr:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

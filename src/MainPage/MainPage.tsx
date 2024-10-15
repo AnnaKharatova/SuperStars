@@ -33,30 +33,34 @@ const skillsColors = [
 function MainPage() {
   const [fetchedData, setFetchedData] = useState<IEmployees[]>([]);
   const [teamsList, setTeamsList] = useState<ITeam[]>([]);
-
-  useEffect(() => {
-    fetch(`${BASE_URL}/employees/`)
-      .then((response) => response.json())
-      .then((data) => {
-        setFetchedData(data);
-      })
-      .catch((res) => {
-        console.log("Ошибка при получении данных:", res.message);
-      });
-  }, []);
+  const [currentTeam, setCurrentTeam] = useState<ITeam>();
 
   useEffect(() => {
     fetch(`${BASE_URL}/teams-list/`)
       .then((response) => response.json())
       .then((data) => {
         setTeamsList(data);
+        setCurrentTeam(data[0]);
       })
       .catch((res) => {
         console.log("Ошибка при получении данных:", res.message);
       });
   }, []);
 
-  console.log(teamsList);
+  useEffect(() => {
+    if (currentTeam) {
+      fetch(`${BASE_URL}/employees/`)
+        .then((response) => response.json())
+        .then((data) => {
+          setFetchedData(data);
+        })
+        .catch((res) => {
+          console.log("Ошибка при получении данных:", res.message);
+        });
+    }
+  }, [currentTeam]);
+
+  if (!currentTeam) return <div>Идет загрузка...</div>;
 
   return (
     <main className="main">
@@ -82,7 +86,12 @@ function MainPage() {
         <RaitingDinamics />
       </section>
       <section className="table">
-        <SkillsTable employees={fetchedData} teams={teamsList} />
+        <SkillsTable
+          employees={fetchedData}
+          teams={teamsList}
+          currentTeam={currentTeam}
+          setCurrentTeam={setCurrentTeam}
+        />
       </section>
     </main>
   );

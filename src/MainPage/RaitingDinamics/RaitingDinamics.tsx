@@ -45,7 +45,7 @@ function RaitingDinamics() {
             }}
           />
           <YAxis
-            domain={[0, "auto"]} // Замените `domain={[0, 'auto']}` на `domain={([0, 'auto'])}`
+            domain={[0, "auto"]}
             tickFormatter={(value) => {
               return value.toFixed(2);
             }}

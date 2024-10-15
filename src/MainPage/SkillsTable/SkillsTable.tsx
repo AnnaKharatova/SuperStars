@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./SkillsTable.scss";
 import DownloadDashbord from "../../DownloadDashbord/DownloadDashbord";
@@ -11,44 +11,58 @@ import { IEmployees, ITeam } from "../../utils/types.ts";
 interface IProps {
   employees: IEmployees[];
   teams: ITeam[];
+  currentTeam: ITeam;
+  setCurrentTeam: (team: ITeam) => void;
 }
 
-const SkillsTable = ({ employees, teams }: IProps) => {
+const SkillsTable = ({
+  employees,
+  teams,
+  currentTeam,
+  setCurrentTeam,
+}: IProps) => {
   const [hardSkills, setHardSkills] = useState<boolean>(true);
-  const [currentTeam, setCurrentTeam] = useState<ITeam>({
-    id: 1,
-    name: "Core",
-  });
   const [showTooltip, setShowTooltip] = useState<string | null>(null);
+  const [softSkillsList, setSoftSkillsList] = useState<string[]>([]);
+  const [hardSkillsList, setHardSkillsList] = useState<string[]>([]);
 
-  if (!employees) return <div>Загрузка данных...</div>;
+  console.log(softSkillsList);
+  console.log(hardSkillsList);
 
-  const softList = Array.from(
-    new Set(
-      employees.flatMap((item) =>
-        item.skills?.soft_skills?.map((item) => item.name),
-      ),
-    ),
-  );
+  useEffect(() => {
+    if (employees) {
+      const softList = Array.from(
+        new Set(
+          employees?.flatMap((item) =>
+            item.skills?.soft_skills?.map((item) => item.name),
+          ),
+        ),
+      );
 
-  const hardList = Array.from(
-    new Set(
-      employees.flatMap((item) =>
-        item.skills?.hard_skills?.map((item) => item.name),
-      ),
-    ),
-  );
+      setSoftSkillsList(softList);
+
+      const hardList = Array.from(
+        new Set(
+          employees?.flatMap((item) =>
+            item.skills?.hard_skills?.map((item) => item.name),
+          ),
+        ),
+      );
+
+      setHardSkillsList(hardList);
+    }
+  }, [employees]);
+
+  console.log(employees);
 
   function handleSoftSkills() {
+    //убрать/заменить
     setHardSkills(false);
   }
 
   function handleHardSkills() {
+    //убрать/заменить
     setHardSkills(true);
-  }
-
-  function handleTeam(team: ITeam) {
-    setCurrentTeam(team);
   }
 
   const handleMouseOver = (index: string) => {
@@ -62,6 +76,8 @@ const SkillsTable = ({ employees, teams }: IProps) => {
   const handleSort = (skill: string) => {
     console.log("здесь могла бы быть сортировка по", { skill });
   };
+
+  if (!employees) return <div>Загрузка данных...</div>;
 
   return (
     <>
@@ -90,7 +106,7 @@ const SkillsTable = ({ employees, teams }: IProps) => {
               key={uuidv4()}
               className={`skills__skills-button ${currentTeam.name == team.name ? "skills__skills-button_active" : ""}`}
               onClick={() => {
-                handleTeam(team);
+                setCurrentTeam(team);
               }}
             >
               {team.name}
@@ -135,7 +151,7 @@ const SkillsTable = ({ employees, teams }: IProps) => {
                   />
                 </th>
                 {hardSkills &&
-                  hardList.map((skillName, index) => (
+                  hardSkillsList.map((skillName, index) => (
                     <th key={uuidv4()} className="table__skill">
                       <div className="table__skill-container">
                         <p className="table__skill-text">{skillName}</p>
@@ -153,7 +169,7 @@ const SkillsTable = ({ employees, teams }: IProps) => {
                     </th>
                   ))}
                 {!hardSkills &&
-                  softList.map((skillName, index) => (
+                  softSkillsList.map((skillName, index) => (
                     <th key={uuidv4()} className="table__skill">
                       <div className="table__skill-container">
                         <p className="table__skill-text">{skillName}</p>
@@ -174,7 +190,7 @@ const SkillsTable = ({ employees, teams }: IProps) => {
             </thead>
 
             <tbody>
-              {employees.map((item, index) => (
+              {employees?.map((item, index) => (
                 <tr className="table__row" key={uuidv4()}>
                   <td className="employee">
                     <div>{index + 1}</div>

@@ -10,32 +10,6 @@ const DownloadDashbord: React.FC<IProps> = ({ minimalism }) => {
   const dashbordRef = useRef<HTMLDivElement>(null);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
-  /* const downloadPdf = () => {
-         const element = document.body.innerHTML;
-         const opt = {
-             margin: 10,
-             filename: 'Factuur <?php echo $factuurnaam ?>.pdf',
-             image: { type: 'jpeg', quality: 1 },
-             html2canvas: { letterRendering: false, width: 1440, height: 1920 },
-             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-             pagebreak: { mode: ['avoid-all', 'css'] }
-         };
-         // Choose the element and save the PDF for our user.
-         html2pdf().from(element).set(opt).save();
-         document.body.innerHTML = element;
- 
-     };
-     
-     const downloadJpeg = () => {
-         const element = document.getElementById('root');
-         html2canvas(element).then(canvas => {
-             const link = document.createElement('root');
-             link.download = 'my-page.jpeg';
-             link.href = canvas.toDataURL('image/jpeg');
-             link.click();
-         });
-     }; */
-
   const downloadExcel = () => {
     console.log("функционал в разработке");
   };

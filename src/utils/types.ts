@@ -28,7 +28,7 @@ export interface IEmployer {
     id: number;
   }[];
   skills: ISkills;
-};
+}
 
 export interface IEmployees {
   id: number;
@@ -45,7 +45,7 @@ export interface IEmployees {
   requests_by_employee: number;
   development_plan: boolean;
   skills: ISkills;
-};
+}
 
 export interface ITeam {
   id: number;
