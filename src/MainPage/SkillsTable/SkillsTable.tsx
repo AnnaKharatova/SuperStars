@@ -1,28 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./SkillsTable.scss";
 import DownloadDashbord from "../../DownloadDashbord/DownloadDashbord";
 import defaultPhoto from "../../assets/images/photo-default.svg";
-import errowDown from "../../assets/icons/sort-arrow.svg";
 import MyTooltip from "../../MyTooltip/MyTooltip";
 import progressUp from "../../assets/icons/progress-arrow-up.svg";
 
-import { IEmployees, ITeam } from '../../utils/types.ts'
+import { IEmployees, ITeam } from "../../utils/types.ts";
 
 interface IProps {
-  employees: IEmployees[],
-  teams: ITeam[],
+  employees: IEmployees[];
+  teams: ITeam[];
 }
 
 const SkillsTable = ({ employees, teams }: IProps) => {
   const [hardSkills, setHardSkills] = useState<boolean>(true);
   const [currentTeam, setCurrentTeam] = useState<ITeam>({
     id: 1,
-    name: "Core"
-});
+    name: "Core",
+  });
   const [showTooltip, setShowTooltip] = useState<string | null>(null);
 
-  if (!employees) return <div>Загрузка данных...</div>
+  if (!employees) return <div>Загрузка данных...</div>;
 
   const softList = Array.from(
     new Set(
@@ -38,7 +37,7 @@ const SkillsTable = ({ employees, teams }: IProps) => {
         item.skills?.hard_skills?.map((item) => item.name),
       ),
     ),
-  )
+  );
 
   function handleSoftSkills() {
     setHardSkills(false);
@@ -51,7 +50,6 @@ const SkillsTable = ({ employees, teams }: IProps) => {
   function handleTeam(team: ITeam) {
     setCurrentTeam(team);
   }
-
 
   const handleMouseOver = (index: string) => {
     setShowTooltip(index);
@@ -192,7 +190,9 @@ const SkillsTable = ({ employees, teams }: IProps) => {
                     />
                     {item.bus_factor && (
                       <MyTooltip
-                        showTooltip={showTooltip === String(index + "bus-factor")}
+                        showTooltip={
+                          showTooltip === String(index + "bus-factor")
+                        }
                         text={"Bus Factor"}
                       />
                     )}

@@ -1,9 +1,9 @@
 import "./TrainingPage.scss";
-import { useEffect, useState } from "react";
+// import { useState } from "react";
 import defaultPhoto from "../assets/images/photo-default.svg";
-import {BASE_URL} from '../utils/constants.js'
+// import {BASE_URL} from '../utils/constants.js'
 
-interface ITrainingData {
+/* interface ITrainingData {
   employees: {
     bus_factor:boolean,
     grade: string,
@@ -16,10 +16,9 @@ interface ITrainingData {
     }
   }
   name: string
-}
-  
-function TrainingPage() {
+} */
 
+function TrainingPage() {
   const item = {
     bus_factor: true,
     name: "Иванова Екатерина",
@@ -27,12 +26,7 @@ function TrainingPage() {
     grade: "Junior",
   };
 
-  const [data, setData] = useState<ITrainingData[]>([]);
-
-  console.log(data);
-
-
-
+  // const [data, setData] = useState<ITrainingData[]>([]);
 
   return (
     <section className="training">

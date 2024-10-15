@@ -32,12 +32,12 @@ function DonutChart({ data, title, colors }: IProps) {
             cornerRadius={10}
           >
             {data.map((item, index: any) => (
-                <Cell
-                  style={{ outline: "none" }}
-                  key={`cell-${index}+${item.name}`}
-                  fill={colors[index % colors.length]}
-                  strokeWidth={0}
-                />
+              <Cell
+                style={{ outline: "none" }}
+                key={`cell-${index}+${item.name}`}
+                fill={colors[index % colors.length]}
+                strokeWidth={0}
+              />
             ))}
             <LabelList
               dataKey="name"

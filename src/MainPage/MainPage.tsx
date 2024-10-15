@@ -1,11 +1,11 @@
 import DonutChart from "./DonutChart/DonutChart";
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 import "./MainPage.scss";
 import StaticCards from "./StaticCards/StaticCards";
 import Compitents from "./Compitents/Compitents";
 import RaitingDinamics from "./RaitingDinamics/RaitingDinamics.tsx";
 import SkillsTable from "./SkillsTable/SkillsTable.tsx";
-import { BASE_URL } from '../utils/constants.ts'
+import { BASE_URL } from "../utils/constants.ts";
 import { IEmployees, ITeam } from "../utils/types.ts";
 
 const gradesData = [
@@ -31,9 +31,8 @@ const skillsColors = [
 ];
 
 function MainPage() {
-
-  const [fetchedData, setFetchedData] = useState<IEmployees[]>([])
-  const [teamsList, setTeamsList] = useState<ITeam[]>([])
+  const [fetchedData, setFetchedData] = useState<IEmployees[]>([]);
+  const [teamsList, setTeamsList] = useState<ITeam[]>([]);
 
   useEffect(() => {
     fetch(`${BASE_URL}/employees/`)
@@ -55,9 +54,9 @@ function MainPage() {
       .catch((res) => {
         console.log("Ошибка при получении данных:", res.message);
       });
-  }, [])
+  }, []);
 
-  console.log(teamsList)
+  console.log(teamsList);
 
   return (
     <main className="main">
@@ -83,7 +82,7 @@ function MainPage() {
         <RaitingDinamics />
       </section>
       <section className="table">
-        <SkillsTable employees={fetchedData} teams={teamsList}/>
+        <SkillsTable employees={fetchedData} teams={teamsList} />
       </section>
     </main>
   );

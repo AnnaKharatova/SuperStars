@@ -38,11 +38,14 @@ function RaitingDinamics() {
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" tickFormatter={(value: string) => {
-            return value || "N/A";
-          }} />
+          <XAxis
+            dataKey="name"
+            tickFormatter={(value: string) => {
+              return value || "N/A";
+            }}
+          />
           <YAxis
-            domain={([0, 'auto'])} // Замените `domain={[0, 'auto']}` на `domain={([0, 'auto'])}`
+            domain={[0, "auto"]} // Замените `domain={[0, 'auto']}` на `domain={([0, 'auto'])}`
             tickFormatter={(value) => {
               return value.toFixed(2);
             }}

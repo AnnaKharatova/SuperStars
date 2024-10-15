@@ -1,1 +1,1 @@
-export const BASE_URL = `https://super-stars.online/api/v1`
+export const BASE_URL = `https://super-stars.online/api/v1`;
