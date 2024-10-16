@@ -29,8 +29,6 @@ interface ITrainingData {
 function TrainingPage() {
   const [data, setData] = useState<ITrainingData>();
 
-  console.log(data);
-
   useEffect(() => {
     fetch(`${BASE_URL}/trainig_requests/`)
       .then((response) => response.json())
@@ -40,7 +38,7 @@ function TrainingPage() {
       .catch((res) => {
         console.log("Ошибка при получении данных:", res.message);
       });
-  }, []);
+  }, []); 
 
   return (
     <section className="training">
@@ -85,7 +83,7 @@ function TrainingPage() {
                             ? "employee__image"
                             : "employee__image_true"
                         }
-                        src={employee.image ? employee.image : defaultPhoto}
+                        src={employee.image ? `https://super-stars.online/api/v1${employee.image}` : defaultPhoto}
                       />
                       <div>
                         <p className="employee__name">{employee.name}</p>

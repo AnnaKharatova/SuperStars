@@ -30,10 +30,18 @@ const skillsColors = [
   "#221670",
 ];
 
-function MainPage() {
-  const [fetchedData, setFetchedData] = useState<IEmployees[]>([]);
+interface IProps {
+  fetchedData: IEmployees[]
+  setFetchedData: (data:IEmployees[]) => void
+}
+
+function MainPage({fetchedData, setFetchedData} :IProps) {
   const [teamsList, setTeamsList] = useState<ITeam[]>([]);
   const [currentTeam, setCurrentTeam] = useState<ITeam>();
+
+  const busFactorTrue = fetchedData.filter(employee => employee.bus_factor === true).length;
+  const totalRequestsByEmployee = fetchedData.reduce((sum, employee) => sum + employee.requests_by_employee, 0);
+  const developmentPlanTrue = fetchedData.filter(employee => employee.development_plan === true).length;
 
   useEffect(() => {
     fetch(`${BASE_URL}/teams-list/`)
@@ -49,7 +57,7 @@ function MainPage() {
 
   useEffect(() => {
     if (currentTeam) {
-      fetch(`${BASE_URL}/employees/`)
+      fetch(`${BASE_URL}/employees/?team=${currentTeam.id}`)
         .then((response) => response.json())
         .then((data) => {
           setFetchedData(data);
@@ -66,10 +74,10 @@ function MainPage() {
     <main className="main">
       <section className="main__title-group">
         <h2 className="main__title">Аналитика навыков</h2>
-        <span className="main__title-span">18 сотрудников</span>
+        <span className="main__title-span">{fetchedData.length} сотрудников</span>
       </section>
       <section className="analyst">
-        <StaticCards />
+        <StaticCards totalEmployees={fetchedData.length} developmentPlanTrue={developmentPlanTrue} busFactorTrue={busFactorTrue} totalRequestsByEmployee={totalRequestsByEmployee} />
         <DonutChart
           data={gradesData}
           colors={gradesColors}

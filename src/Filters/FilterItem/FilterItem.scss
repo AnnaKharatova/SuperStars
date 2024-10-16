@@ -3,7 +3,7 @@
     box-sizing: border-box;
     box-shadow: 0px 8px 12px 0px #42434b26;
     background-color: inherit;
-    padding: 6px 9px;
+    padding: 6px 7px;
     border: none;
     border-radius: 8px;
     font-family: "Manrope";
@@ -32,6 +32,7 @@
     top: 95px;
     padding: 10px;
     box-shadow: 0px 8px 12px 0px #42434b26;
+    z-index: 5;
   }
 
   &__input {
@@ -61,9 +62,12 @@
     margin-top: 10px;
     height: 124px;
     overflow: auto;
+    overflow-x: auto;
+    
 
     &-item {
       margin-bottom: 10px;
+
     }
   }
 

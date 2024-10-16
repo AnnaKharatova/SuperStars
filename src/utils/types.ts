@@ -1,19 +1,21 @@
 export interface ISkills {
   soft_skills: {
-    accordance: boolean;
-    grows: boolean;
+    accordance: boolean;   
+    growth: boolean;
     id: number;
     name: string;
     penultimate_score: number;
     score: number;
+    reqirement_score: number;
   }[];
   hard_skills: {
     accordance: boolean;
-    grows: boolean;
+    growth: boolean;
     id: number;
     name: string;
     penultimate_score: number;
     score: number;
+    reqirement_score: number;
   }[];
 }
 
@@ -35,7 +37,7 @@ export interface IEmployees {
   image: string;
   name: string;
   position: string;
-  bus_factor: false;
+  bus_factor: boolean;
   grade: string;
   team: {
     id: number;
@@ -50,4 +52,9 @@ export interface IEmployees {
 export interface ITeam {
   id: number;
   name: string;
+}
+
+export interface IFilter {
+  id: number,
+  name: string
 }

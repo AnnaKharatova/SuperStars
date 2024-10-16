@@ -3,65 +3,56 @@ import { v4 as uuidv4 } from "uuid";
 import "./SkillsTable.scss";
 import DownloadDashbord from "../../DownloadDashbord/DownloadDashbord";
 import defaultPhoto from "../../assets/images/photo-default.svg";
+import errowDown from "../../assets/icons/sort-arrow.svg";
 import MyTooltip from "../../MyTooltip/MyTooltip";
 import progressUp from "../../assets/icons/progress-arrow-up.svg";
-import progressDown from '../../assets/icons/progress-arrow-down.svg'
 
-import { IEmployees, ITeam } from "../../utils/types.ts";
+import {  IEmployees } from '../../utils/types.ts'
+
+const teams = ["Core", "Mode"];
 
 interface IProps {
-  employees: IEmployees[];
-  teams: ITeam[];
-  currentTeam: ITeam;
-  setCurrentTeam: (team: ITeam) => void;
+  employees: IEmployees[]
 }
 
-const SkillsTable = ({
-  employees,
-  teams,
-  currentTeam,
-  setCurrentTeam,
-}: IProps) => {
+const SkillsTable = ({employees} : IProps) => {
   const [hardSkills, setHardSkills] = useState<boolean>(true);
-  const [showTooltip, setShowTooltip] = useState<string | null>(null);
+  const [currentTeam, setCurrentTeam] = useState<string>('Core');
   const [softSkillsList, setSoftSkillsList] = useState<string[]>([]);
   const [hardSkillsList, setHardSkillsList] = useState<string[]>([]);
+  const [showTooltip, setShowTooltip] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (employees) {
-      const softList = Array.from(
-        new Set(
-          employees?.flatMap((item) =>
-            item.skills?.soft_skills?.map((item) => item.name),
-          ),
-        ),
-      );
 
-      setSoftSkillsList(softList);
+  const softList = Array.from(
+    new Set(
+      employees.flatMap((item) =>
+        item.skills?.soft_skills?.map((item) => item.name),
+      ),
+    ),
+  );
+  setSoftSkillsList(softList);
 
-      const hardList = Array.from(
-        new Set(
-          employees?.flatMap((item) =>
-            item.skills?.hard_skills?.map((item) => item.name),
-          ),
-        ),
-      );
-
-      setHardSkillsList(hardList);
-    }
-  }, [employees]);
-
-  console.log(employees);
+  const hardList = Array.from(
+    new Set(
+      employees.flatMap((item) =>
+        item.skills?.hard_skills?.map((item) => item.name),
+      ),
+    ),
+  );
+  setHardSkillsList(hardList);
 
   function handleSoftSkills() {
-    //убрать/заменить
     setHardSkills(false);
   }
 
   function handleHardSkills() {
-    //убрать/заменить
     setHardSkills(true);
   }
+
+  function handleTeam(team: string) {
+    setCurrentTeam(team);
+  }
+
 
   const handleMouseOver = (index: string) => {
     setShowTooltip(index);
@@ -75,17 +66,13 @@ const SkillsTable = ({
     console.log("здесь могла бы быть сортировка по", { skill });
   };
 
-  console.log(employees)
-
-  if (!employees) return <div>Загрузка данных...</div>;
-
   return (
     <>
       <div className="skills__header">
         <div className="skills__download">
           <DownloadDashbord minimalism={true} />
         </div>
-        <h2 className="skills__title">Текущая экспертная оценка навыков</h2>
+        <h2 className="skills__title">Средняя экспертная оценка навыков</h2>
         <div className="skills__buttons">
           <button
             className={`skills__skills-button ${hardSkills ? "skills__skills-button_active" : ""}`}
@@ -104,12 +91,12 @@ const SkillsTable = ({
           {teams.map((team) => (
             <button
               key={uuidv4()}
-              className={`skills__skills-button ${currentTeam.name == team.name ? "skills__skills-button_active" : ""}`}
+              className={`skills__skills-button ${currentTeam == team ? "skills__skills-button_active" : ""}`}
               onClick={() => {
-                setCurrentTeam(team);
+                handleTeam(team);
               }}
             >
-              {team.name}
+              {team}
             </button>
           ))}
         </div>
@@ -118,7 +105,7 @@ const SkillsTable = ({
       <div className="table__container">
         <div className="table__team">
           <h4 className="table__header">Команда</h4>
-          <p className="table__team-name">{currentTeam?.name}</p>
+          <p className="table__team-name">{currentTeam}</p>
         </div>
         <div className="table__main">
           <table>
@@ -171,26 +158,26 @@ const SkillsTable = ({
                 {!hardSkills &&
                   softSkillsList.map((skillName, index) => (
                     <th key={uuidv4()} className="table__skill">
-                      <div className="table__skill-container">
-                        <p className="table__skill-text">{skillName}</p>
-                        <button
-                          className="table__sort-button"
-                          onMouseOver={() => handleMouseOver(String(index))}
-                          onMouseOut={handleMouseOut}
-                          onClick={() => handleSort(skillName)}
-                        ></button>
-                        <MyTooltip
-                          showTooltip={showTooltip === String(index)}
-                          text="Сортировка"
-                        />
-                      </div>
+                      <p>{skillName}</p>
+                      <button
+                        className="table__sort-button"
+                        onMouseOver={() => handleMouseOver(String(index))}
+                        onMouseOut={handleMouseOut}
+                        onClick={() => handleSort(skillName)}
+                      >
+                        <img src={errowDown} alt="sort Icon" />
+                      </button>
+                      <MyTooltip
+                        showTooltip={showTooltip === String(index)}
+                        text="Сортировка"
+                      />
                     </th>
                   ))}
               </tr>
             </thead>
 
             <tbody>
-              {employees?.map((item, index) => (
+              {employees.map((item, index) => (
                 <tr className="table__row" key={uuidv4()}>
                   <td className="employee">
                     <div>{index + 1}</div>
@@ -200,19 +187,17 @@ const SkillsTable = ({
                           ? "employee__image"
                           : "employee__image_true"
                       }
-                      src={item.image ? item.image : defaultPhoto}
+                      src={defaultPhoto}
                       onMouseOver={() => handleMouseOver(index + "bus-factor")}
                       onMouseOut={handleMouseOut}
                     />
                     {item.bus_factor && (
                       <MyTooltip
-                        showTooltip={
-                          showTooltip === String(index + "bus-factor")
-                        }
+                        showTooltip={showTooltip === String(index + "bus-factor")}
                         text={"Bus Factor"}
                       />
                     )}
-                    <div className="employee__about">
+                    <div>
                       <p className="employee__name">{item.name}</p>
                       <p className="employee__position">{`${item.position}, ${item.grade}`}</p>
                     </div>
@@ -226,24 +211,18 @@ const SkillsTable = ({
                         <div className="employee__score">
                           <img
                             className="employee__score-progress"
-                            src={i.growth ? progressUp : progressDown}
+                            src={progressUp}
                             alt="прогресс"
                           />
-                          <p className={i.accordance==true ? "employee__score-value" : "employee__score-value employee__score-value_true " }>{i.score}</p>
+                          <p className="employee__score-value">{i.score}</p>
                         </div>
                       </td>
                     ))}
                   {!hardSkills &&
                     item.skills.soft_skills.map((i) => (
-                      <td key={uuidv4()}>
-                        <div className="employee__score">
-                        <img
-                            className="employee__score-progress"
-                            src={i.growth ? progressUp : progressDown}
-                            alt="прогресс"
-                          />
-                          <p className={i.accordance===true ? "employee__score-value" : "employee__score-value employee__score-value_true " }>{i.score}</p>
-                        </div>
+                      <td key={uuidv4()} className="employe__score">
+                        <img className="employe__score-progress" />
+                        <p className="employe__score-value">{i.score}</p>
                       </td>
                     ))}
                 </tr>

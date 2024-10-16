@@ -15,37 +15,25 @@ import MyTooltip from "../../MyTooltip/MyTooltip";
 import LineTooltip from "../LineTooltip/LineTooltip";
 export const data = [
   {
-    name: "Page A",
+    name: "2014-08-05",
     uv: 4,
-    pv: 2,
-    amt: 2,
-  },
-  {
-    name: "Page B",
-    uv: 3,
-    pv: 1,
-    amt: 4,
-  },
-  {
-    name: "Page C",
-    uv: 2,
-    pv: 5,
-    amt: 2,
-  },
-  {
-    name: "Page D",
-    uv: 2,
     pv: 3,
-    amt: 4,
-  },
-  {
-    name: "Page E",
-    uv: 1,
-    pv: 4,
     amt: 2,
   },
   {
-    name: "Page F",
+    name: "2023-02-17",
+    uv: 3,
+    pv: 2,
+    amt: 3,
+  },
+  {
+    name: "2023-07-3",
+    uv: 2,
+    pv: 1,
+    amt: 2,
+  },
+  {
+    name: "2024-02-04",
     uv: 2,
     pv: 3,
     amt: 2,
