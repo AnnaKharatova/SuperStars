@@ -5,7 +5,7 @@ import DownloadDashbord from "../../DownloadDashbord/DownloadDashbord";
 import defaultPhoto from "../../assets/images/photo-default.svg";
 import MyTooltip from "../../MyTooltip/MyTooltip";
 import progressUp from "../../assets/icons/progress-arrow-up.svg";
-import progressDown from '../../assets/icons/progress-arrow-down.svg'
+import progressDown from "../../assets/icons/progress-arrow-down.svg";
 
 import { IEmployees, ITeam } from "../../utils/types.ts";
 
@@ -54,12 +54,10 @@ const SkillsTable = ({
   console.log(employees);
 
   function handleSoftSkills() {
-    //убрать/заменить
     setHardSkills(false);
   }
 
   function handleHardSkills() {
-    //убрать/заменить
     setHardSkills(true);
   }
 
@@ -75,7 +73,7 @@ const SkillsTable = ({
     console.log("здесь могла бы быть сортировка по", { skill });
   };
 
-  console.log(employees)
+  console.log(employees);
 
   if (!employees) return <div>Загрузка данных...</div>;
 
@@ -229,7 +227,15 @@ const SkillsTable = ({
                             src={i.growth ? progressUp : progressDown}
                             alt="прогресс"
                           />
-                          <p className={i.accordance==true ? "employee__score-value" : "employee__score-value employee__score-value_true " }>{i.score}</p>
+                          <p
+                            className={
+                              i.accordance == true
+                                ? "employee__score-value"
+                                : "employee__score-value employee__score-value_true "
+                            }
+                          >
+                            {i.score}
+                          </p>
                         </div>
                       </td>
                     ))}
@@ -237,12 +243,20 @@ const SkillsTable = ({
                     item.skills.soft_skills.map((i) => (
                       <td key={uuidv4()}>
                         <div className="employee__score">
-                        <img
+                          <img
                             className="employee__score-progress"
                             src={i.growth ? progressUp : progressDown}
                             alt="прогресс"
                           />
-                          <p className={i.accordance===true ? "employee__score-value" : "employee__score-value employee__score-value_true " }>{i.score}</p>
+                          <p
+                            className={
+                              i.accordance === true
+                                ? "employee__score-value"
+                                : "employee__score-value employee__score-value_true "
+                            }
+                          >
+                            {i.score}
+                          </p>
                         </div>
                       </td>
                     ))}
