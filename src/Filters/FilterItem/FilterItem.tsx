@@ -8,36 +8,42 @@ import { IFilter } from "../../utils/types";
 interface IProps {
   filter: string;
   itemsList: IFilter[];
-  filterMark: string[]
+  filterMark: string[];
   setFilterMark: (filterMark: string[]) => void;
-  selectedIdList: number[]
+  selectedIdList: number[];
   setSelectedIdList: (id: number[]) => void;
 }
-const FilterItem: React.FC<IProps> = ({ itemsList, filter, filterMark, setFilterMark, selectedIdList, setSelectedIdList }) => {
-
+const FilterItem: React.FC<IProps> = ({
+  itemsList,
+  filter,
+  filterMark,
+  setFilterMark,
+  selectedIdList,
+  setSelectedIdList,
+}) => {
   const [filterListOpen, setFilterListOpen] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
 
-  const [filteredList, setFilteredList] = useState<IFilter[]>([])
+  const [filteredList, setFilteredList] = useState<IFilter[]>([]);
 
   function createArrays(items: IFilter[]) {
-    const allFilters = items.map(item => item.id);
-    const allFilteraName = items.map(item => item.name);
+    const allFilters = items.map((item) => item.id);
+    const allFilteraName = items.map((item) => item.name);
     return [allFilters, allFilteraName];
   }
 
   const [allFilters, allFilteraName] = createArrays(itemsList);
 
   useEffect(() => {
-    setFilteredList(itemsList)
-  }, [])
+    setFilteredList(itemsList);
+  }, []);
 
   const handleInputChange = (event: any) => {
     const searchValue = event.target.value.toLowerCase();
-    const results = itemsList.filter(item =>
-      item.name.toLowerCase().startsWith(searchValue)
+    const results = itemsList.filter((item) =>
+      item.name.toLowerCase().startsWith(searchValue),
     );
-    setFilteredList(results)
+    setFilteredList(results);
   };
 
   const handleСheckboxChange = (event: any) => {
@@ -54,7 +60,7 @@ const FilterItem: React.FC<IProps> = ({ itemsList, filter, filterMark, setFilter
       setSelectedIdList(selectedIdList.filter((part) => part !== value));
       setFilterMark(filterMark.filter((item) => item !== name));
     }
-  }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -88,12 +94,13 @@ const FilterItem: React.FC<IProps> = ({ itemsList, filter, filterMark, setFilter
       }
       if (filteredList.every((item) => filterMark.includes(item.name))) {
         setFilterMark(filteredList.map((item) => item.name));
-      }
-      else {
-        setFilterMark(filterMark.filter((item) => item !== allFilteraName.toString()));
+      } else {
+        setFilterMark(
+          filterMark.filter((item) => item !== allFilteraName.toString()),
+        );
       }
     }
-  };
+  }
 
   return (
     <div ref={popupRef} className="filter-item">
@@ -124,21 +131,44 @@ const FilterItem: React.FC<IProps> = ({ itemsList, filter, filterMark, setFilter
             onChange={handleInputChange}
           />
           <ul className="filter-item__list">
-            {filteredList.length > 0 ?
+            {filteredList.length > 0 ? (
               <>
                 <li className="filter-item__list-item">
-                  <input className="filter-item__ckeckbox" type="checkbox" onChange={handleAllFilters} id="all" name={allFilteraName.toString()} value={allFilters.toString()} />
-                  <label className="filter-item__label" htmlFor="all">Все</label>
+                  <input
+                    className="filter-item__ckeckbox"
+                    type="checkbox"
+                    onChange={handleAllFilters}
+                    id="all"
+                    name={allFilteraName.toString()}
+                    value={allFilters.toString()}
+                  />
+                  <label className="filter-item__label" htmlFor="all">
+                    Все
+                  </label>
                 </li>
                 {filteredList.map((item) => (
                   <li key={uuidv4()} className="filter-item__list-item">
-                    <input className="filter-item__ckeckbox" type="checkbox" checked={filterMark.includes(item.name)} onChange={handleСheckboxChange} name={item.name} value={item.id} id={item.name.toString().toLowerCase()} />
-                    <label className="filter-item__label" htmlFor={item.name.toString().toLowerCase()}>{item.name}</label>
+                    <input
+                      className="filter-item__ckeckbox"
+                      type="checkbox"
+                      checked={filterMark.includes(item.name)}
+                      onChange={handleСheckboxChange}
+                      name={item.name}
+                      value={item.id}
+                      id={item.name.toString().toLowerCase()}
+                    />
+                    <label
+                      className="filter-item__label"
+                      htmlFor={item.name.toString().toLowerCase()}
+                    >
+                      {item.name}
+                    </label>
                   </li>
                 ))}
-              </> : <div className="filter-item__label">Здесь ничего нет</div>
-            }
-
+              </>
+            ) : (
+              <div className="filter-item__label">Здесь ничего нет</div>
+            )}
           </ul>
         </div>
       }

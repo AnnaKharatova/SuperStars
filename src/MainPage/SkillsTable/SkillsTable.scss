@@ -13,11 +13,12 @@
   &__header {
     box-sizing: border-box;
     display: flex;
-    padding: 0 0 0 10px;
+    padding: 0;
     align-items: bottom;
     margin-bottom: 5px;
     align-items: center;
     margin-top: 30px;
+    gap: 20px;
   }
 
   &__title {
@@ -28,18 +29,21 @@
     color: #42434b;
     margin: 0;
     text-align: top;
-    padding-left: 20px;
     padding-bottom: 10px;
   }
 
   &__buttons {
     display: flex;
     gap: 5px;
-    margin-left: 15px;
 
     &-teams {
       margin-left: auto;
     }
+  }
+
+  &__download {
+    box-sizing: border-box;
+    place-items: bottom;
   }
 
   &__skills-button {
@@ -63,11 +67,10 @@
 }
 
 .table {
-  width: 100%;
+  width: 95%;
 
   &__container {
     display: flex;
-    padding-left: 10px;
     gap: 30px;
   }
 
@@ -83,6 +86,15 @@
     }
   }
 
+  &__header {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #42434b;
+    text-align: left;
+  }
+
   &__sort-button {
     border: none;
     background-color: inherit;
@@ -92,6 +104,10 @@
     background-image: url(../../assets/icons/sort-arrow.svg);
     background-repeat: no-repeat;
     background-position: center;
+
+    &_desc {
+      background-image: url(../../assets/icons/sort-arrow-up.svg);
+    }
   }
 
   &__employeer {
@@ -225,11 +241,17 @@
   &__score {
     display: flex;
     gap: 10px;
+    margin: 0 3px;
     justify-content: center;
     border-radius: 8px;
     border-bottom: 1px solid #e10d34;
+
     &_true {
       border-bottom: 1px solid #009e39;
+    }
+
+    &_null {
+      border: 1px solid rgba(239, 239, 239, 1);
     }
 
     &-value {

@@ -38,7 +38,7 @@ function TrainingPage() {
       .catch((res) => {
         console.log("Ошибка при получении данных:", res.message);
       });
-  }, []); 
+  }, []);
 
   return (
     <section className="training">
@@ -83,7 +83,11 @@ function TrainingPage() {
                             ? "employee__image"
                             : "employee__image_true"
                         }
-                        src={employee.image ? `https://super-stars.online/api/v1${employee.image}` : defaultPhoto}
+                        src={
+                          employee.image
+                            ? `https://super-stars.online/api/v1${employee.image}`
+                            : defaultPhoto
+                        }
                       />
                       <div>
                         <p className="employee__name">{employee.name}</p>

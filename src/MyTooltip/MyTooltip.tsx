@@ -3,11 +3,13 @@ import "./MyTooltip.scss";
 interface IProps {
   showTooltip: boolean;
   text: string;
+  top?: number;
+  width?: string;
 }
 
-function MyTooltip({ showTooltip, text }: IProps) {
+function MyTooltip({ showTooltip, text, top, width }: IProps) {
   return (
-    <div className="tooltip-container">
+    <div className="tooltip-container" style={{ top: top, width: width }}>
       {showTooltip && (
         <div className="tooltip">
           <div className="tooltip-arrow" />

@@ -1,6 +1,6 @@
 export interface ISkills {
   soft_skills: {
-    accordance: boolean;   
+    accordance: boolean;
     growth: boolean;
     id: number;
     name: string;
@@ -55,6 +55,6 @@ export interface ITeam {
 }
 
 export interface IFilter {
-  id: number,
-  name: string
+  id: number;
+  name: string;
 }

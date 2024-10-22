@@ -1,83 +1,91 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import DownloadDashbord from "../DownloadDashbord/DownloadDashbord";
 import FilterItem from "./FilterItem/FilterItem";
 import delCross from "../assets/icons/delete-cross.svg";
 import "./Filters.scss";
-import { IFilter, IEmployees } from '../utils/types';
+import { IFilter, IEmployees } from "../utils/types";
 
 interface IProps {
-  setFetchedData: (data:IEmployees[]) => void
+  setFetchedData: (data: IEmployees[]) => void;
 }
 
 interface IFiltersList {
-  filter: string,
-  itemsList: IFilter[],
-  selectedIdList: number[],
-  setSelectedIdList: (data: number[]) => void,
+  filter: string;
+  itemsList: IFilter[];
+  selectedIdList: number[];
+  setSelectedIdList: (data: number[]) => void;
 }
 
-function Filters({ }:IProps) {
+function Filters({}: IProps) {
+  const [filterMark, setFilterMark] = useState<string[]>([]);
 
-  const [filterMark, setFilterMark] = useState<string[]>([])
+  const [competencesList, setCompetencesList] = useState<IFilter[]>([]);
+  const [selectedIdCompetencesList, setSelectedIdCompetencesList] = useState<
+    number[]
+  >([]);
 
-  const [competencesList, setCompetencesList] = useState<IFilter[]>([])
-  const [selectedIdCompetencesList, setSelectedIdCompetencesList] = useState<number[]>([])
+  const [positionList, setPositionList] = useState<IFilter[]>([]);
+  const [selectedIdPositionList, setSelectedIdPositionList] = useState<
+    number[]
+  >([]);
 
-  const [positionList, setPositionList] = useState<IFilter[]>([])
-  const [selectedIdPositionList, setSelectedIdPositionList] = useState<number[]>([])
+  const [gradesList, setGradesList] = useState<IFilter[]>([]);
+  const [selectedIdGradesList, setSelectedIdGradesList] = useState<number[]>(
+    [],
+  );
 
-  const [gradesList, setGradesList] = useState<IFilter[]>([])
-  const [selectedIdGradesList, setSelectedIdGradesList] = useState<number[]>([])
+  const [employeesList, setEmployeesList] = useState<IFilter[]>([]);
+  const [selectedIdEmployeesList, setSelectedIdEmployeesList] = useState<
+    number[]
+  >([]);
 
-  const [employeesList, setEmployeesList] = useState<IFilter[]>([])
-  const [selectedIdEmployeesList, setSelectedIdEmployeesList] = useState<number[]>([])
+  const [teamsList, setTeamsList] = useState<IFilter[]>([]);
+  const [selectedIdteamsList, setSelectedIdTeamsList] = useState<number[]>([]);
 
-  const [teamsList, setTeamsList] = useState<IFilter[]>([])
-  const [selectedIdteamsList, setSelectedIdTeamsList] = useState<number[]>([])
-
-  const [skillsList, setSkillsList] = useState<IFilter[]>([])
-  const [selectedIdSkillsList, setSelectedIdSkillsList] = useState<number[]>([])
+  const [skillsList, setSkillsList] = useState<IFilter[]>([]);
+  const [selectedIdSkillsList, setSelectedIdSkillsList] = useState<number[]>(
+    [],
+  );
 
   const filtersList: IFiltersList[] = [
     {
-      filter: 'Команда',
+      filter: "Команда",
       itemsList: teamsList,
       selectedIdList: selectedIdteamsList,
       setSelectedIdList: setSelectedIdTeamsList,
     },
     {
-      filter: 'Должность',
+      filter: "Должность",
       itemsList: positionList,
       selectedIdList: selectedIdPositionList,
       setSelectedIdList: setSelectedIdPositionList,
     },
     {
-      filter: 'Грейд',
+      filter: "Грейд",
       itemsList: gradesList,
       selectedIdList: selectedIdGradesList,
-      setSelectedIdList: setSelectedIdGradesList
+      setSelectedIdList: setSelectedIdGradesList,
     },
     {
-      filter: 'Сотрудник',
+      filter: "Сотрудник",
       itemsList: employeesList,
       selectedIdList: selectedIdEmployeesList,
-      setSelectedIdList: setSelectedIdEmployeesList
+      setSelectedIdList: setSelectedIdEmployeesList,
     },
     {
-      filter: 'Компетенция',
+      filter: "Компетенция",
       itemsList: competencesList,
       selectedIdList: selectedIdCompetencesList,
-      setSelectedIdList: setSelectedIdCompetencesList
+      setSelectedIdList: setSelectedIdCompetencesList,
     },
     {
-      filter: 'Навык',
+      filter: "Навык",
       itemsList: skillsList,
       selectedIdList: selectedIdSkillsList,
-      setSelectedIdList: setSelectedIdSkillsList
-    }
-
-  ]
+      setSelectedIdList: setSelectedIdSkillsList,
+    },
+  ];
 
   /* const groups = selectedGroup ? selectedGroup.map(group => `group=${group}&`).join('') : '';
     const engins = selectedEngine ? selectedEngine.map(engine => `engine_cat=${engine}&`).join('') : '';
@@ -150,7 +158,7 @@ function Filters({ }:IProps) {
   }, []);
 
   function handleRemoveAll() {
-    setFilterMark([])
+    setFilterMark([]);
   }
 
   return (
@@ -159,18 +167,29 @@ function Filters({ }:IProps) {
         <div>
           <button className="filter-item__button">Период</button>
         </div>
-        {filtersList.map(item => (
-          <FilterItem key={uuidv4()} filter={item.filter} itemsList={item.itemsList} filterMark={filterMark} setFilterMark={setFilterMark} selectedIdList={item.selectedIdList} setSelectedIdList={item.setSelectedIdList} />
+        {filtersList.map((item) => (
+          <FilterItem
+            key={uuidv4()}
+            filter={item.filter}
+            itemsList={item.itemsList}
+            filterMark={filterMark}
+            setFilterMark={setFilterMark}
+            selectedIdList={item.selectedIdList}
+            setSelectedIdList={item.setSelectedIdList}
+          />
         ))}
 
         <button className="filters__submit-button">Применить фильтры</button>
         <DownloadDashbord minimalism={false} />
       </div>
       <ul className="filters__marks">
-        {filterMark.length > 0 &&
+        {filterMark.length > 0 && (
           <>
             <li>
-              <button className="filters__delete-all" onClick={handleRemoveAll}></button>
+              <button
+                className="filters__delete-all"
+                onClick={handleRemoveAll}
+              ></button>
             </li>
             {filterMark.map((item) => (
               <li className="filters__mark" key={uuidv4()}>
@@ -181,7 +200,7 @@ function Filters({ }:IProps) {
               </li>
             ))}
           </>
-        }
+        )}
       </ul>
     </section>
   );

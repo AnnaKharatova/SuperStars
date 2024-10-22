@@ -7,21 +7,20 @@ import errowDown from "../../assets/icons/sort-arrow.svg";
 import MyTooltip from "../../MyTooltip/MyTooltip";
 import progressUp from "../../assets/icons/progress-arrow-up.svg";
 
-import {  IEmployees } from '../../utils/types.ts'
+import { IEmployees } from "../../utils/types.ts";
 
 const teams = ["Core", "Mode"];
 
 interface IProps {
-  employees: IEmployees[]
+  employees: IEmployees[];
 }
 
-const SkillsTable = ({employees} : IProps) => {
+const SkillsTable = ({ employees }: IProps) => {
   const [hardSkills, setHardSkills] = useState<boolean>(true);
-  const [currentTeam, setCurrentTeam] = useState<string>('Core');
+  const [currentTeam, setCurrentTeam] = useState<string>("Core");
   const [softSkillsList, setSoftSkillsList] = useState<string[]>([]);
   const [hardSkillsList, setHardSkillsList] = useState<string[]>([]);
   const [showTooltip, setShowTooltip] = useState<string | null>(null);
-
 
   const softList = Array.from(
     new Set(
@@ -52,7 +51,6 @@ const SkillsTable = ({employees} : IProps) => {
   function handleTeam(team: string) {
     setCurrentTeam(team);
   }
-
 
   const handleMouseOver = (index: string) => {
     setShowTooltip(index);
@@ -193,7 +191,9 @@ const SkillsTable = ({employees} : IProps) => {
                     />
                     {item.bus_factor && (
                       <MyTooltip
-                        showTooltip={showTooltip === String(index + "bus-factor")}
+                        showTooltip={
+                          showTooltip === String(index + "bus-factor")
+                        }
                         text={"Bus Factor"}
                       />
                     )}

@@ -5,8 +5,7 @@ import DownloadDashbord from "../../DownloadDashbord/DownloadDashbord";
 import defaultPhoto from "../../assets/images/photo-default.svg";
 import MyTooltip from "../../MyTooltip/MyTooltip";
 import progressUp from "../../assets/icons/progress-arrow-up.svg";
-import progressDown from '../../assets/icons/progress-arrow-down.svg'
-
+import progressDown from "../../assets/icons/progress-arrow-down.svg";
 import { IEmployees, ITeam } from "../../utils/types.ts";
 
 interface IProps {
@@ -26,6 +25,18 @@ const SkillsTable = ({
   const [showTooltip, setShowTooltip] = useState<string | null>(null);
   const [softSkillsList, setSoftSkillsList] = useState<string[]>([]);
   const [hardSkillsList, setHardSkillsList] = useState<string[]>([]);
+  const [displayedEmployees, setDisplayedEmployees] = useState<IEmployees[]>(
+    [],
+  );
+  const [sortDirections, setSortDirections] = useState(
+    Array(softSkillsList.length).fill("asc"),
+  );
+
+  console.log(employees);
+
+  useEffect(() => {
+    setDisplayedEmployees(employees);
+  }, [employees]);
 
   useEffect(() => {
     if (employees) {
@@ -36,9 +47,7 @@ const SkillsTable = ({
           ),
         ),
       );
-
       setSoftSkillsList(softList);
-
       const hardList = Array.from(
         new Set(
           employees?.flatMap((item) =>
@@ -46,22 +55,9 @@ const SkillsTable = ({
           ),
         ),
       );
-
       setHardSkillsList(hardList);
     }
   }, [employees]);
-
-  console.log(employees);
-
-  function handleSoftSkills() {
-    //убрать/заменить
-    setHardSkills(false);
-  }
-
-  function handleHardSkills() {
-    //убрать/заменить
-    setHardSkills(true);
-  }
 
   const handleMouseOver = (index: string) => {
     setShowTooltip(index);
@@ -71,31 +67,112 @@ const SkillsTable = ({
     setShowTooltip(null);
   };
 
-  const handleSort = (skill: string) => {
-    console.log("здесь могла бы быть сортировка по", { skill });
+  const handleSkillsSort = (
+    hardSkills: boolean,
+    skillName: string,
+    index: number,
+  ) => {
+    setSortDirections((prevDirections) => {
+      const newDirections = [...prevDirections];
+      newDirections[index] = newDirections[index] === "asc" ? "desc" : "asc";
+      // Сброс направления для остальных столбцов
+      for (let i = 0; i < newDirections.length; i++) {
+        if (i !== index) {
+          newDirections[i] = "asc"; // Устанавливаем 'asc' для остальных столбцов
+        }
+      }
+      return newDirections;
+    });
+    if (hardSkills) {
+      const sortedEmployees = employees
+        .filter((employer) =>
+          employer.skills.hard_skills.some((skill) => skill.name === skillName),
+        )
+        .sort((a, b) => {
+          const scoreA =
+            a.skills.hard_skills.find((skill) => skill.name === skillName)
+              ?.score || 0;
+          const scoreB =
+            b.skills.hard_skills.find((skill) => skill.name === skillName)
+              ?.score || 0;
+          if (sortDirections[index] == "asc") {
+            return scoreB - scoreA;
+          } else {
+            return scoreA - scoreB;
+          }
+        });
+      setDisplayedEmployees(sortedEmployees);
+    } else {
+      const sortedEmployees = employees
+        .filter((employer) =>
+          employer.skills.soft_skills.some((skill) => skill.name === skillName),
+        )
+        .sort((a, b) => {
+          const scoreA =
+            a.skills.soft_skills.find((skill) => skill.name === skillName)
+              ?.score || 0;
+          const scoreB =
+            b.skills.soft_skills.find((skill) => skill.name === skillName)
+              ?.score || 0;
+          if (sortDirections[index] == "asc") {
+            return scoreB - scoreA;
+          } else {
+            return scoreA - scoreB;
+          }
+        });
+      setDisplayedEmployees(sortedEmployees);
+    }
   };
 
-  console.log(employees)
+  function handleNameSort(index: number) {
+    setSortDirections((prevDirections) => {
+      const newDirections = [...prevDirections];
+      newDirections[index] = newDirections[index] === "asc" ? "desc" : "asc";
+      // Сброс направления для остальных столбцов
+      for (let i = 0; i < newDirections.length; i++) {
+        if (i !== index) {
+          newDirections[i] = "asc"; // Устанавливаем 'asc' для остальных столбцов
+        }
+      }
+      return newDirections;
+    });
+    const sortedEmployees = employees.sort((a, b) => {
+      if (sortDirections[index] === "asc") {
+        return a.name.localeCompare(b.name);
+      } else {
+        return b.name.localeCompare(a.name);
+      }
+    });
+    setDisplayedEmployees(sortedEmployees);
+  }
+
+  function handleReitingSort() {
+    console.log("сортировка по рейтингу");
+  }
 
   if (!employees) return <div>Загрузка данных...</div>;
 
   return (
     <>
       <div className="skills__header">
+        <h2 className="skills__title">Текущая экспертная оценка навыков</h2>
         <div className="skills__download">
           <DownloadDashbord minimalism={true} />
         </div>
-        <h2 className="skills__title">Текущая экспертная оценка навыков</h2>
         <div className="skills__buttons">
           <button
             className={`skills__skills-button ${hardSkills ? "skills__skills-button_active" : ""}`}
-            onClick={handleHardSkills}
+            onClick={() => {
+              setHardSkills(true);
+            }}
           >
             Hard skills
           </button>
           <button
             className={`skills__skills-button  ${!hardSkills ? "skills__skills-button_active" : ""}`}
-            onClick={handleSoftSkills}
+            onClick={() => {
+              setHardSkills(false);
+            }}
           >
             Soft skills
           </button>
@@ -127,14 +204,18 @@ const SkillsTable = ({
                 <th className="table__employeer">
                   Сотрудник
                   <button
-                    className="table__sort-button"
-                    onMouseOver={() => handleMouseOver("159")}
+                    className={
+                      sortDirections[1025] == "desc"
+                        ? "table__sort-button table__sort-button_desc"
+                        : "table__sort-button"}
+                    onMouseOver={() => handleMouseOver("1025")}
                     onMouseOut={handleMouseOut}
-                    onClick={() => handleSort("Сотрудник")}
+                    onClick={() => handleNameSort(1025)}
                   ></button>
                   <MyTooltip
-                    showTooltip={showTooltip === "159"}
+                    showTooltip={showTooltip === "1025"}
                     text="Сортировка"
+                    top={25}
                   />
                 </th>
                 <th className="table__raiting">
@@ -143,11 +224,12 @@ const SkillsTable = ({
                     className="table__sort-button"
                     onMouseOver={() => handleMouseOver("147")}
                     onMouseOut={handleMouseOut}
-                    onClick={() => handleSort("Рейтинг")}
+                    onClick={() => handleReitingSort()}
                   ></button>
                   <MyTooltip
                     showTooltip={showTooltip === "147"}
                     text="Сортировка"
+                    top={25}
                   />
                 </th>
                 {hardSkills &&
@@ -156,15 +238,22 @@ const SkillsTable = ({
                       <div className="table__skill-container">
                         <p className="table__skill-text">{skillName}</p>
                         <button
-                          className="table__sort-button"
+                          className={
+                            sortDirections[index] == "desc"
+                              ? "table__sort-button table__sort-button_desc"
+                              : "table__sort-button"
+                          }
                           onMouseOver={() => handleMouseOver(String(index))}
                           onMouseOut={handleMouseOut}
-                          onClick={() => handleSort(skillName)}
+                          onClick={() =>
+                            handleSkillsSort(hardSkills, skillName, index)
+                          }
                         ></button>
-                        <MyTooltip
+                        {/* <MyTooltip
                           showTooltip={showTooltip === String(index)}
                           text="Сортировка"
-                        />
+                          top={40}
+                        /> */}
                       </div>
                     </th>
                   ))}
@@ -174,15 +263,17 @@ const SkillsTable = ({
                       <div className="table__skill-container">
                         <p className="table__skill-text">{skillName}</p>
                         <button
-                          className="table__sort-button"
+                          className={
+                            sortDirections[index] == "desc"
+                              ? "table__sort-button table__sort-button_desc"
+                              : "table__sort-button"
+                          }
                           onMouseOver={() => handleMouseOver(String(index))}
                           onMouseOut={handleMouseOut}
-                          onClick={() => handleSort(skillName)}
+                          onClick={() =>
+                            handleSkillsSort(hardSkills, skillName, index)
+                          }
                         ></button>
-                        <MyTooltip
-                          showTooltip={showTooltip === String(index)}
-                          text="Сортировка"
-                        />
                       </div>
                     </th>
                   ))}
@@ -190,7 +281,7 @@ const SkillsTable = ({
             </thead>
 
             <tbody>
-              {employees?.map((item, index) => (
+              {displayedEmployees?.map((item, index) => (
                 <tr className="table__row" key={uuidv4()}>
                   <td className="employee">
                     <div>{index + 1}</div>
@@ -210,6 +301,7 @@ const SkillsTable = ({
                           showTooltip === String(index + "bus-factor")
                         }
                         text={"Bus Factor"}
+                        top={30}
                       />
                     )}
                     <div className="employee__about">
@@ -223,26 +315,42 @@ const SkillsTable = ({
                   {hardSkills &&
                     item.skills.hard_skills.map((i) => (
                       <td key={uuidv4()}>
-                        <div className="employee__score">
+                        <div
+                          className={
+                            i.accordance === true
+                              ? "employee__score"
+                              : i.accordance === null
+                                ? "employee__score employee__score_null "
+                                : "employee__score employee__score_true "
+                          }
+                        >
                           <img
                             className="employee__score-progress"
                             src={i.growth ? progressUp : progressDown}
                             alt="прогресс"
                           />
-                          <p className={i.accordance==true ? "employee__score-value" : "employee__score-value employee__score-value_true " }>{i.score}</p>
+                          <p className="employee__score-value">{i.score}</p>
                         </div>
                       </td>
                     ))}
                   {!hardSkills &&
                     item.skills.soft_skills.map((i) => (
                       <td key={uuidv4()}>
-                        <div className="employee__score">
-                        <img
+                        <div
+                          className={
+                            i.accordance === true
+                              ? "employee__score"
+                              : i.accordance === null
+                                ? "employee__score employee__score_null "
+                                : "employee__score employee__score_true "
+                          }
+                        >
+                          <img
                             className="employee__score-progress"
                             src={i.growth ? progressUp : progressDown}
                             alt="прогресс"
                           />
-                          <p className={i.accordance===true ? "employee__score-value" : "employee__score-value employee__score-value_true " }>{i.score}</p>
+                          <p className="employee__score-value">{i.score}</p>
                         </div>
                       </td>
                     ))}

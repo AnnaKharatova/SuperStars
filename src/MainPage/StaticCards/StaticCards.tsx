@@ -8,7 +8,12 @@ interface IProps {
   totalEmployees: number;
 }
 
-function StaticCards({ totalEmployees, developmentPlanTrue, busFactorTrue, totalRequestsByEmployee }: IProps) {
+function StaticCards({
+  totalEmployees,
+  developmentPlanTrue,
+  busFactorTrue,
+  totalRequestsByEmployee,
+}: IProps) {
   return (
     <ul className="static-cards">
       <li className="static-card">
@@ -18,7 +23,6 @@ function StaticCards({ totalEmployees, developmentPlanTrue, busFactorTrue, total
       <li className="static-card">
         <div className="static-card__data">
           <div className="static-card__value">62%</div>
-
         </div>
         <h3 className="static-card__title">соответствие текущей роли</h3>
       </li>
@@ -29,7 +33,9 @@ function StaticCards({ totalEmployees, developmentPlanTrue, busFactorTrue, total
         </Link>
       </li>
       <li className="static-card static-card__progress-bar">
-        <div className="static-card__value">{developmentPlanTrue}/{totalEmployees}</div>
+        <div className="static-card__value">
+          {developmentPlanTrue}/{totalEmployees}
+        </div>
         <h3 className="static-card__title">Планы развития</h3>
         <div>
           <h3 className="static-card__title"></h3>
